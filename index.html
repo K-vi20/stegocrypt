@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="StegoCrypt - Advanced Steganography Tool. Hide text, images, and audio within images and videos. 100% client-side encryption.">
+    <title>StegoCrypt | Advanced Steganography Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logo-gradient" x1="2" y1="2" x2="22" y2="22">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="logo-text">StegoCrypt</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#security" class="nav-link">Security</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="hero">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>100% Client-Side Processing</span>
+                </div>
+                <h1 class="hero-title">
+                    Hide <span class="gradient-text">Anything</span> in Plain Sight
+                </h1>
+                <p class="hero-description">
+                    Advanced steganography tool to hide text, images, and audio within images and videos. 
+                    All processing happens in your browser - your data never leaves your device.
+                </p>
+            </section>
+
+            <!-- Steganography Type Selector -->
+            <section class="type-selector">
+                <h2 class="type-title">Choose Steganography Type</h2>
+                <div class="type-grid">
+                    <button class="type-btn active" data-type="text-image">
+                        <div class="type-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </div>
+                        <span class="type-label">Text in Image</span>
+                        <span class="type-desc">Hide secret messages</span>
+                    </button>
+                    <button class="type-btn" data-type="image-image">
+                        <div class="type-icon image-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21,15 16,10 5,21"/>
+                            </svg>
+                        </div>
+                        <span class="type-label">Image in Image</span>
+                        <span class="type-desc">Hide images within images</span>
+                    </button>
+                    <button class="type-btn" data-type="audio-image">
+                        <div class="type-icon audio-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23"/>
+                                <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                        </div>
+                        <span class="type-label">Voice in Image</span>
+                        <span class="type-desc">Hide audio recordings</span>
+                    </button>
+                    <button class="type-btn" data-type="image-video">
+                        <div class="type-icon video-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="23,7 16,12 23,17 23,7"/>
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                            </svg>
+                        </div>
+                        <span class="type-label">Image in Video</span>
+                        <span class="type-desc">Hide images in video frames</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Mode Selector (Encode/Decode) -->
+            <section class="mode-selector">
+                <button class="mode-btn active" id="encode-mode-btn" data-mode="encode">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <span>Encode / Hide</span>
+                </button>
+                <button class="mode-btn" id="decode-mode-btn" data-mode="decode">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+                    </svg>
+                    <span>Decode / Reveal</span>
+                </button>
+            </section>
+
+            <!-- ==================== TEXT IN IMAGE ==================== -->
+            <section class="panel text-image-panel active" id="text-image-encode-panel" data-type="text-image" data-mode="encode">
+                <div class="panel-header">
+                    <h3>Hide Text Message in Image</h3>
+                    <p>Embed a secret text message within an image using LSB steganography</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <div class="upload-area" id="text-image-encode-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17,8 12,3 7,8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                            </div>
+                            <h3>Drop carrier image here</h3>
+                            <p>or click to browse</p>
+                            <span class="upload-formats">PNG, JPG, WEBP</span>
+                            <input type="file" id="text-image-encode-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="text-image-encode-preview">
+                            <img id="text-image-encode-preview-img" alt="Preview">
+                            <button class="remove-btn" data-target="text-image-encode">×</button>
+                            <div class="image-info" id="text-image-encode-info"></div>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <div class="input-group">
+                            <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secret Message</label>
+                            <textarea id="text-image-message" placeholder="Enter your secret message here..." rows="6"></textarea>
+                            <div class="char-counter"><span id="text-image-char-count">0</span> characters <span class="capacity-info" id="text-image-capacity"></span></div>
+                        </div>
+                        <div class="input-group">
+                            <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Password (Optional)</label>
+                            <input type="password" id="text-image-encode-key" placeholder="Add encryption password">
+                        </div>
+                        <button class="primary-btn" id="text-image-encode-btn" disabled>
+                            <span class="btn-text">Encode Message</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="result-section hidden" id="text-image-encode-result">
+                    <div class="result-header">
+                        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg></div>
+                        <h3>Message Hidden Successfully!</h3>
+                    </div>
+                    <div class="result-preview"><img id="text-image-result-img" alt="Result"></div>
+                    <div class="result-actions">
+                        <button class="secondary-btn download-btn" data-result="text-image-result-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+                        <button class="ghost-btn reset-btn" data-panel="text-image-encode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>New</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel text-image-panel" id="text-image-decode-panel" data-type="text-image" data-mode="decode">
+                <div class="panel-header">
+                    <h3>Extract Hidden Text from Image</h3>
+                    <p>Reveal secret messages hidden within images</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <div class="upload-area" id="text-image-decode-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17,8 12,3 7,8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                            </div>
+                            <h3>Drop encoded image here</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="text-image-decode-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="text-image-decode-preview">
+                            <img id="text-image-decode-preview-img" alt="Preview">
+                            <button class="remove-btn" data-target="text-image-decode">×</button>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <div class="input-group">
+                            <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Decryption Password</label>
+                            <input type="password" id="text-image-decode-key" placeholder="Enter password if encrypted">
+                        </div>
+                        <button class="primary-btn decode-variant" id="text-image-decode-btn" disabled>
+                            <span class="btn-text">Decode Message</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                        <div class="decoded-message hidden" id="text-image-decoded">
+                            <div class="decoded-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Hidden Message</span></div>
+                            <div class="decoded-content" id="text-image-decoded-content"></div>
+                            <button class="copy-btn" data-content="text-image-decoded-content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== IMAGE IN IMAGE ==================== -->
+            <section class="panel image-image-panel" id="image-image-encode-panel" data-type="image-image" data-mode="encode">
+                <div class="panel-header">
+                    <h3>Hide Image Inside Another Image</h3>
+                    <p>Conceal a secret image within a carrier image</p>
+                </div>
+                <div class="panel-grid three-col">
+                    <div class="upload-section">
+                        <label class="upload-label">Carrier Image</label>
+                        <div class="upload-area" id="image-image-carrier-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </div>
+                            <h3>Carrier Image</h3>
+                            <p>The visible image</p>
+                            <input type="file" id="image-image-carrier-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="image-image-carrier-preview">
+                            <img id="image-image-carrier-preview-img" alt="Carrier">
+                            <button class="remove-btn" data-target="image-image-carrier">×</button>
+                            <div class="image-info" id="image-image-carrier-info"></div>
+                        </div>
+                    </div>
+                    <div class="upload-section">
+                        <label class="upload-label">Secret Image</label>
+                        <div class="upload-area secret-upload" id="image-image-secret-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </div>
+                            <h3>Secret Image</h3>
+                            <p>Image to hide</p>
+                            <input type="file" id="image-image-secret-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="image-image-secret-preview">
+                            <img id="image-image-secret-preview-img" alt="Secret">
+                            <button class="remove-btn" data-target="image-image-secret">×</button>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <div class="input-group">
+                            <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Bit Depth</label>
+                            <select id="image-image-bits">
+                                <option value="2">2 bits (Higher quality carrier)</option>
+                                <option value="3">3 bits (Balanced)</option>
+                                <option value="4" selected>4 bits (Best secret quality)</option>
+                            </select>
+                        </div>
+                        <button class="primary-btn image-variant" id="image-image-encode-btn" disabled>
+                            <span class="btn-text">Hide Image</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="result-section hidden" id="image-image-encode-result">
+                    <div class="result-header">
+                        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg></div>
+                        <h3>Image Hidden Successfully!</h3>
+                    </div>
+                    <div class="result-preview"><img id="image-image-result-img" alt="Result"></div>
+                    <div class="result-actions">
+                        <button class="secondary-btn download-btn" data-result="image-image-result-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+                        <button class="ghost-btn reset-btn" data-panel="image-image-encode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>New</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel image-image-panel" id="image-image-decode-panel" data-type="image-image" data-mode="decode">
+                <div class="panel-header">
+                    <h3>Extract Hidden Image</h3>
+                    <p>Reveal secret images hidden within carrier images</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <div class="upload-area" id="image-image-decode-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </div>
+                            <h3>Drop encoded image here</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="image-image-decode-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="image-image-decode-preview">
+                            <img id="image-image-decode-preview-img" alt="Preview">
+                            <button class="remove-btn" data-target="image-image-decode">×</button>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <div class="input-group">
+                            <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Bit Depth (same as encoding)</label>
+                            <select id="image-image-decode-bits">
+                                <option value="2">2 bits</option>
+                                <option value="3">3 bits</option>
+                                <option value="4" selected>4 bits</option>
+                            </select>
+                        </div>
+                        <button class="primary-btn decode-variant" id="image-image-decode-btn" disabled>
+                            <span class="btn-text">Extract Image</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                        <div class="extracted-image hidden" id="image-image-extracted">
+                            <div class="decoded-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Extracted Image</span></div>
+                            <div class="extracted-preview"><img id="image-image-extracted-img" alt="Extracted"></div>
+                            <button class="secondary-btn download-btn" data-result="image-image-extracted-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== AUDIO IN IMAGE ==================== -->
+            <section class="panel audio-image-panel" id="audio-image-encode-panel" data-type="audio-image" data-mode="encode">
+                <div class="panel-header">
+                    <h3>Hide Audio in Image</h3>
+                    <p>Embed voice recordings or audio files within images</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <label class="upload-label">Carrier Image</label>
+                        <div class="upload-area" id="audio-image-carrier-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </div>
+                            <h3>Carrier Image</h3>
+                            <p>PNG recommended for best quality</p>
+                            <input type="file" id="audio-image-carrier-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="audio-image-carrier-preview">
+                            <img id="audio-image-carrier-preview-img" alt="Carrier">
+                            <button class="remove-btn" data-target="audio-image-carrier">×</button>
+                            <div class="image-info" id="audio-image-carrier-info"></div>
+                        </div>
+                    </div>
+                    <div class="upload-section">
+                        <label class="upload-label">Audio File or Record</label>
+                        <div class="upload-area audio-upload" id="audio-image-audio-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                    <line x1="12" y1="19" x2="12" y2="23"/>
+                                    <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                            </div>
+                            <h3>Audio File</h3>
+                            <p>WAV, MP3, OGG (max size depends on image)</p>
+                            <input type="file" id="audio-image-audio-file" accept="audio/*" hidden>
+                        </div>
+                        <div class="audio-preview hidden" id="audio-image-audio-preview">
+                            <div class="audio-info">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                                <span id="audio-image-audio-name">audio.wav</span>
+                            </div>
+                            <audio id="audio-image-audio-player" controls></audio>
+                            <button class="remove-btn audio-remove" data-target="audio-image-audio">×</button>
+                        </div>
+                        <div class="record-section">
+                            <button class="record-btn" id="audio-record-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                                </svg>
+                                <span>Record Voice</span>
+                            </button>
+                            <div class="recording-indicator hidden" id="recording-indicator">
+                                <span class="recording-dot"></span>
+                                <span id="recording-time">00:00</span>
+                                <button class="stop-record-btn" id="stop-record-btn">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="primary-btn audio-variant full-width" id="audio-image-encode-btn" disabled>
+                    <span class="btn-text">Hide Audio in Image</span>
+                    <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                </button>
+                <div class="result-section hidden" id="audio-image-encode-result">
+                    <div class="result-header">
+                        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg></div>
+                        <h3>Audio Hidden Successfully!</h3>
+                    </div>
+                    <div class="result-preview"><img id="audio-image-result-img" alt="Result"></div>
+                    <div class="result-actions">
+                        <button class="secondary-btn download-btn" data-result="audio-image-result-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+                        <button class="ghost-btn reset-btn" data-panel="audio-image-encode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>New</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel audio-image-panel" id="audio-image-decode-panel" data-type="audio-image" data-mode="decode">
+                <div class="panel-header">
+                    <h3>Extract Hidden Audio from Image</h3>
+                    <p>Reveal audio files hidden within images</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <div class="upload-area" id="audio-image-decode-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </div>
+                            <h3>Drop encoded image here</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="audio-image-decode-file" accept="image/png" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="audio-image-decode-preview">
+                            <img id="audio-image-decode-preview-img" alt="Preview">
+                            <button class="remove-btn" data-target="audio-image-decode">×</button>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <button class="primary-btn decode-variant" id="audio-image-decode-btn" disabled>
+                            <span class="btn-text">Extract Audio</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                        <div class="extracted-audio hidden" id="audio-image-extracted">
+                            <div class="decoded-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span>Extracted Audio</span></div>
+                            <audio id="audio-image-extracted-audio" controls></audio>
+                            <button class="secondary-btn" id="download-extracted-audio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Audio</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== IMAGE IN VIDEO ==================== -->
+            <section class="panel image-video-panel" id="image-video-encode-panel" data-type="image-video" data-mode="encode">
+                <div class="panel-header">
+                    <h3>Hide Image in Video</h3>
+                    <p>Embed a secret image within video frames</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <label class="upload-label">Video File</label>
+                        <div class="upload-area" id="image-video-video-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="23,7 16,12 23,17 23,7"/>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                                </svg>
+                            </div>
+                            <h3>Video File</h3>
+                            <p>MP4, WEBM (smaller videos recommended)</p>
+                            <input type="file" id="image-video-video-file" accept="video/*" hidden>
+                        </div>
+                        <div class="video-preview hidden" id="image-video-video-preview">
+                            <video id="image-video-video-player" controls></video>
+                            <button class="remove-btn" data-target="image-video-video">×</button>
+                            <div class="video-info" id="image-video-video-info"></div>
+                        </div>
+                    </div>
+                    <div class="upload-section">
+                        <label class="upload-label">Secret Image</label>
+                        <div class="upload-area secret-upload" id="image-video-secret-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </div>
+                            <h3>Secret Image</h3>
+                            <p>Image to hide in frames</p>
+                            <input type="file" id="image-video-secret-file" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview hidden" id="image-video-secret-preview">
+                            <img id="image-video-secret-preview-img" alt="Secret">
+                            <button class="remove-btn" data-target="image-video-secret">×</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-section hidden" id="image-video-progress">
+                    <div class="progress-bar"><div class="progress-fill" id="image-video-progress-fill"></div></div>
+                    <span class="progress-text" id="image-video-progress-text">Processing frames...</span>
+                </div>
+                <button class="primary-btn video-variant full-width" id="image-video-encode-btn" disabled>
+                    <span class="btn-text">Hide Image in Video</span>
+                    <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                </button>
+                <div class="result-section hidden" id="image-video-encode-result">
+                    <div class="result-header">
+                        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg></div>
+                        <h3>Image Hidden in Video!</h3>
+                        <p>The image has been embedded in the first frame</p>
+                    </div>
+                    <div class="result-preview video-result">
+                        <video id="image-video-result-video" controls></video>
+                    </div>
+                    <div class="result-actions">
+                        <button class="secondary-btn" id="download-encoded-video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Video</button>
+                        <button class="ghost-btn reset-btn" data-panel="image-video-encode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>New</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel image-video-panel" id="image-video-decode-panel" data-type="image-video" data-mode="decode">
+                <div class="panel-header">
+                    <h3>Extract Hidden Image from Video</h3>
+                    <p>Reveal secret images hidden within video frames</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="upload-section">
+                        <div class="upload-area" id="image-video-decode-upload">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="23,7 16,12 23,17 23,7"/>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                                </svg>
+                            </div>
+                            <h3>Drop encoded video here</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="image-video-decode-file" accept="video/*" hidden>
+                        </div>
+                        <div class="video-preview hidden" id="image-video-decode-preview">
+                            <video id="image-video-decode-player" controls></video>
+                            <button class="remove-btn" data-target="image-video-decode">×</button>
+                        </div>
+                    </div>
+                    <div class="message-section">
+                        <button class="primary-btn decode-variant" id="image-video-decode-btn" disabled>
+                            <span class="btn-text">Extract Image</span>
+                            <span class="btn-loader hidden"><span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span></span>
+                        </button>
+                        <div class="extracted-image hidden" id="image-video-extracted">
+                            <div class="decoded-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Extracted Image</span></div>
+                            <div class="extracted-preview"><img id="image-video-extracted-img" alt="Extracted"></div>
+                            <button class="secondary-btn download-btn" data-result="image-video-extracted-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section" id="how-it-works">
+                <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+                        <h3>Text in Image</h3>
+                        <p>Uses LSB (Least Significant Bit) to embed text in pixel values</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon image-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>
+                        <h3>Image in Image</h3>
+                        <p>Splits bit planes between carrier and secret images</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon audio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div>
+                        <h3>Voice in Image</h3>
+                        <p>Encodes audio data into the image's color channels</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon video-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23,7 16,12 23,17 23,7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+                        <h3>Image in Video</h3>
+                        <p>Hides image data in selected video frames</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+            <section class="security-section" id="security">
+                <div class="security-card">
+                    <div class="security-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <h3>Your Privacy is Our Priority</h3>
+                    <p>All encoding and decoding happens entirely in your browser using Canvas API and Web Audio API. Your files are never uploaded to any server.</p>
+                    <div class="security-badges">
+                        <span class="security-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>No Server Upload</span>
+                        <span class="security-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Client-Side Only</span>
+                        <span class="security-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Open Source</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Built with <span class="heart">♥</span> for privacy enthusiasts</p>
+            <p class="footer-note">StegoCrypt © 2025 | All processing happens locally in your browser</p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon"></div>
+        <span class="toast-message"></span>
+    </div>
+
+    <canvas id="stego-canvas" style="display: none;"></canvas>
+    <canvas id="stego-canvas-2" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>
